@@ -1,7 +1,7 @@
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
-// const request = require('supertest');
-// const app = require('../lib/app');
+const request = require('supertest');
+const app = require('../lib/app');
 const Game = require('../lib/models/Game');
 
 describe('backend-express-template routes', () => {
@@ -30,6 +30,14 @@ describe('backend-express-template routes', () => {
       genre: 'FPS',
       main_developer: 'Treyarch',
       open_world: false
+    });
+  });
+  it('/games should return a list of ids and game titles', async () => {
+    const resp = await request(app).get('/games');
+    expect(resp.body.length).toEqual(10);
+    expect(resp.body[0]).toEqual({
+      id: expect.any(String),
+      title: expect.any(String)
     });
   });
   afterAll(() => {
