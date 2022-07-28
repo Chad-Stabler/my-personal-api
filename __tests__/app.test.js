@@ -40,6 +40,18 @@ describe('backend-express-template routes', () => {
       title: expect.any(String)
     });
   });
+  it('/games/:id should return a single game of data', async () => {
+    const resp = await request(app).get('/games/3');
+
+    expect(resp.body).toEqual({
+      id: '3',
+      title: 'Call of Duty: World at War',
+      release_year: 2008,
+      genre: 'FPS',
+      main_developer: 'Treyarch',
+      open_world: false
+    });
+  });
   afterAll(() => {
     pool.end();
   });
